@@ -106,12 +106,6 @@ class TodoList(object):
 #coint todos input option. 
 
 
-
-
-
-
-
-
 # from csv import writer
  
 #     # Open file in append mode
@@ -130,8 +124,6 @@ class TodoList(object):
 
 
 def main():
-
-
     td = TodoList()
     
     # REPL <- 
@@ -152,24 +144,25 @@ def main():
     #     print(len(a))
     #     input("shit")
     #     a.append("something")
-    
-
 
 # in main() i want you to read a CSV file of todos, parse it’s contents, and add them to a todo list instance  BEFORE asking user for input etc
 
-
 # also, i want you to write a “save” function that WRITES existing todos in your todo list to the Csv
     # print(os.getcwd()+ "todos.csv")
-    with open("shit.txt") as csv_file:
+    with open('todos.csv') as csv_file:
         csv_reader = csv.reader(csv_file) #expecting values to sep by comma
 
         next(csv_reader) #to skip over the first line of headings
 
         # print_list = [] #the list we will add our csv todos into 
-
         for line in csv_reader:
-            # td.container.append(line)
-            print(line)
+            #td.container.append(line)
+            #print(line[0], line[1])
+            # FILL INSTACNE OF TODOLIST WITH INSTNACES OF TODOS
+            todo_instance = Todo(line[0], line[1])
+            td.container.append(todo_instance)
+
+            #['2', 'test2', ' False']
 
 
         #     print_list.append((t.id,t.todo_name, t.complete))
