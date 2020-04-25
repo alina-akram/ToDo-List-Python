@@ -160,7 +160,7 @@ def main():
 
 # also, i want you to write a “save” function that WRITES existing todos in your todo list to the Csv
     # print(os.getcwd()+ "todos.csv")
-    with open("todos.csv", 'r') as csv_file:
+    with open("shit.txt") as csv_file:
         csv_reader = csv.reader(csv_file) #expecting values to sep by comma
 
         next(csv_reader) #to skip over the first line of headings
