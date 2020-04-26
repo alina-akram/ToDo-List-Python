@@ -1,13 +1,16 @@
 import csv
 import os
 import uuid
+from csv import writer 
 
 class Todo(object):
     
-    def __init__(self, todo_name, complete=False):
+    def __init__(self, todo_name, complete=False, identifier=None):
         self.todo_name = todo_name
         self.complete = complete
-        self.id = str(uuid.uuid4())
+        self.id = identifier
+        if self.id is None:
+            self.id = str(uuid.uuid4())
 
 
 class TodoList(object):
@@ -53,34 +56,32 @@ class TodoList(object):
         for t in self.container:
             print([t.id, t.todo_name, t.complete])
 
-    def save_todos(filename, container): #let's you write a todo directly in to the file/ writes the add-todo() into the file. 
-        from csv import writer 
-        add_list_to_csv = self.container
-        with open(todos.csv, 'a+', newline ='') as write_obj: #create writer obj
-            csv_writer = writer(write_obj)
-            csv_writer.writerow(add_list_to_csv)
-
+    def save_todo(self, todo_instance): #let's you write a todo directly in to the file/ writes the add-todo() into the file. 
+        with open("todos.csv", 'a+', newline ='') as csv_file:
+            todo_writer = csv.writer(csv_file)
+            #Todo -> todocsvrow = ['13415', 'walk dog', 'false']
+            row = [todo_instance.id, todo_instance.todo_name, todo_instance.complete]
+            todo_writer.writerow(row)
+            
 
 def main():
     td = TodoList()
-  that WRITES existing todos in your todo list to the Csv
-    
-    with open('todos.csv') as csv_file:
+    filename = 'todos.csv'
+    with open(filename) as csv_file:
         csv_reader = csv.reader(csv_file) #expecting values to sep by comma
         next(csv_reader) #to skip over the first line of headings
         for line in csv_reader:
-            todo_instance = Todo(line[0], line[1])
+            todo_instance = Todo(line[1], line[2], line[0])
             td.container.append(todo_instance)
 
     while True:
         # READ
-        user_input = input("Enter 1 to create a todo, 2 to remove a todo, 3 to complete a todo, 4 to print all todos:")
-        
+        user_input = input("Enter 1 to create a todo, 2 to remove a todo, 3 to complete a todo, 4 to print all todos: ")
         # EVAL
         if user_input == "1":
             todo_input = input("Enter todo name: ")
-            td.add_todo(todo_input)
-            # td.save_todo(filename, ) 
+            todo_instance = td.add_todo(todo_input)
+            td.save_todo(todo_instance) 
         
         elif user_input == "2":
             remove_task = eval(input("Enter todo id: "))
