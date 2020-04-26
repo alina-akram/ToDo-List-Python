@@ -37,11 +37,27 @@ class TodoList(object):
 
     def remove_todo(self, todo_id): 
         """Remove an item"""
-        todo_to_remove = self._find_todo(todo_id)
-        if todo_to_remove: # does it exist?
-            return self.container.pop(todo_id-1) 
-        else:
-            return False    
+        # GOAL get the index of the todo id in the todolist container, and remove it
+        
+        # IMPLEMENTATION
+        # loop through the todolist container
+        # check each todo's id, and see if it matches the argument 
+        # get the index of that todo
+        # delete the element that isat that index in the cotainer
+
+        # ["uuid1", "uuid2", "uuid3"]
+        # give me uuid3 index -> returns 2
+
+        # todo_to_remove = self._find_todo(todo_id)
+
+
+        # if todo_to_remove:
+        for index, element in enumerate(self.container): 
+        #element is the instance and can only be accessed in pritn
+            if element.id == todo_id:
+                return self.container.remove(element)
+         
+ 
 
     def complete_todo(self, todo_id):
         """ complete a todo """
@@ -84,11 +100,11 @@ def main():
             td.save_todo(todo_instance) 
         
         elif user_input == "2":
-            remove_task = eval(input("Enter todo id: "))
+            remove_task = input("Enter todo id: ")
             td.remove_todo(remove_task)
             
         elif user_input == "3":
-            to_mark = eval(input("Enter todo id: "))
+            to_mark = input("Enter todo id: ")
             td.complete_todo(to_mark)
 
         elif user_input == "4":
